@@ -5,7 +5,7 @@
 {{#argsExist}}  
 Args:
 {{#args}}   
-    {{var}} ({{typePlaceholder}}): {{descriptionPlaceholder}}
+    * {{var}} ({{typePlaceholder}}): {{descriptionPlaceholder}}
 {{/args}}
 {{/argsExist}}
 

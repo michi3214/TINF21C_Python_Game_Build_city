@@ -1,22 +1,55 @@
-import pandas as pd 
-class my_World():
-    """class my_World
+"""
+This is the class my_Wrold.
+    * generate a new world out of blocks (voxels)
+    * save world to database 
+    * load world fom database 
+    * add or destroy blocks (voxels) on the playfield
+
+    Author: Michael Grote
+    E-Mail: inf21111@lehre.dhbw-stuttgart.de
+    Date: 01.05.2023
+    Version 1.0.0
+    license: MIT
+"""
+
+# python module
+import pandas as pd
+from ursina import *
+from loguru import logger
+
+# privat module
+from world.voxel.voxel import My_Voxel
+from world.player.player import My_Player
+
+
+class My_World():
+    """class my_World:
         * create world
-        * add / destroy blocks in the world
+        * add / destroy blocks (voxels) in the world
         * load world from database 
         * save world into database
-        
-        Tests:
-            * Can be initialized
-            * create first blocks in game-engine
+    
+    Args:
+        world_name (str): name of the world
+        type_of_creation (str): new world or load world (e.g. "new" or "load") 
+    Return:
+        None
+    
+    Test:
+        * Can be initialized
+        * create first blocks (voxels) in the game-engine
     """
-    __df_world = pd.DataFrame(columns=["x","y","z","block"])
-    __str_world_name = ""
+
+    __df_world = pd.DataFrame(columns=["x","y","z","block_type"])
     
 
-    def __init__(self, world_name) -> None:
-        self.__str_world_name = world_name
-        self.__create_world()
+    def __init__(self, world_name:str , type_of_creation:str="new") -> None:
+        self.__STR_WORLD_NAME = world_name
+        self.player = My_Player()
+        if type_of_creation == "new":
+            self.__create_world()
+        elif type_of_creation == "load":
+            self.__load_world()
         pass
     
     
@@ -32,22 +65,29 @@ class my_World():
         
         Test:
             * is world generated
+            * did the blocks appear around the player
             * is dataframe correctly filled
         """
-        # TODO: implement function
-        pass
+        logger.info("Create a new world with the name" + self.__STR_WORLD_NAME)
+        for z in range(10):
+            for x in range(10):
+                    self.add_block( Vec3(x,0,z), "grass")
+        for x in range(10):
+            for y in range(5):
+                for z in range(10):
+                    self.add_block(Vec3(x,(-1*y)-1,z), "grass")
+                    
+        # TODO: implement creation if new tbl in database 
     
      
-    def add_block(self, block:str, x:int, y:int, z:int)->None:
+    def add_block(self, position:Vec3,  block_type:str)->None:
         """add_block:
-            * add block to scene in ursina
-            * add block to dataframe
+            * add voxel to scene in ursina
+            * add voxel to dataframe
         
         Args:
-            block (str): type of the block 
-            x (int): X-Position
-            y (int): Y-Position
-            z (int): Z-Position
+            block_type (str): type of the block_type 
+            position (Vec3): (x,y,z) - Positions
         
         Return:
             None
@@ -58,22 +98,22 @@ class my_World():
             * position of new block is correct
         """
         
-        self.__df_world.loc[len(self.__df_world.index)] = [x,y,z,block]
-        # TODO: implement functionality
-        # - add to game engine
-        pass
+        self.__df_world.loc[len(self.__df_world.index)] = [position.x,position.y,position.z,block_type]
+        match block_type:
+            case "grass":
+                My_Voxel(self, position)
+                
+        
     
-    # TODO: implement functionality
+    
      # - delete from game engine
-    def destroy_block(self,x:int, y:int, z:int)->None:
+    def destroy_block(self,position:Vec3)->None:
         """destroy_block:
             * destroy one block
             * delete block from dataframe
         
         Args:
-            x (int): X-Position
-            y (int): Y-Position
-            z (int): Z-Position
+            * position (Vec3): (x,y,z,) - Position
         
         Return:
             None
@@ -82,8 +122,8 @@ class my_World():
             * is block deleted from dataframe
             * is blocked deleted from game-engine
         """
-        self.__df_world.drop(self.__df_world[(self.__df_world["x"] ==  x) & (self.__df_world["y"] ==  y) &  (self.__df_world["z"] ==  z)].index, inplace=True)
-        pass
+        self.__df_world.drop(self.__df_world[(self.__df_world["x"] ==   position.x) & (self.__df_world["y"] ==   position.y) &  (self.__df_world["z"] ==   position.z)].index, inplace=True)
+        destroy(mouse.hovered_entity)
     
     # TODO: implement functionality
      # - save dataframe to sqlite
@@ -103,8 +143,8 @@ class my_World():
     
     # TODO: implement functionality
      # - load dataframe from sqlite
-    def load_world(self)->None:
-        """load_world:
+    def __load_world(self)->None:
+        """__load_world:
             * load data from database
             * create world from the data
         
@@ -113,13 +153,13 @@ class my_World():
             None
             
         Test:
-            * #TODO: Add test
-            * #TODO: Add test
+            * Loaded world corectly from database
+            * Add all blocks to ursina 
         """
+        logger.info("Load world " + self.__STR_WORLD_NAME + " from database")
         pass
     
     def print(self)->None:
         print("Your world look like:")
         print(self.__df_world)
     
-
