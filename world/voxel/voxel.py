@@ -15,7 +15,6 @@ from ursina import *
 from ursina import load_texture
 
 
-
 class My_Voxel(Button):
     def __init__(self, world, position = (0,0,0), texture='assets/grass_block.png'):
         self.__world = world

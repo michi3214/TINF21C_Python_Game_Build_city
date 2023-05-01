@@ -12,6 +12,8 @@ This is the class for My_Player.
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina import *
 
+
+
 class My_Player(Entity):
     def __init__(self) -> None:
         super().__init__(

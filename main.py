@@ -19,21 +19,37 @@ logger.add("logs/Build_City.log")
 # privat module
 from world.world import My_World
 
-STATUS = "start"
+GAME_STATE = "menu"
 
 def input(key):
-    match STATUS:
-        case "start":
+    """input:
+        * handels user interation
+        * choose the rigth input function depending on the GAME_STATE 
+    
+    Args:
+        * key (str): used key (e.g. Keystrokes )
+    
+    Return:
+        None
+    
+    Test:
+        * # TODO: test 1
+        * # TODO: test 2
+    """
+    match GAME_STATE:
+        case "menu":
             pass
         case "playing":
             my_playfield.input(key)
+        case _:
+            logger.error("Game is in an unplaned state (" + GAME_STATE + "). I think you underpaid the developer and he did not finished his work.")
         
     
 
 if __name__ == "__main__":
     app = Ursina()
     my_playfield = My_World("GameOne", "new")
-    STATUS = "playing"
+    GAME_STATE = "playing"
 
     
     
