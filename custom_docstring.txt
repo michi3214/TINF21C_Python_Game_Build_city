@@ -1,0 +1,21 @@
+{{name}}:
+    * {{summaryPlaceholder}}
+    * {{summaryPlaceholder}}
+
+{{#argsExist}}  
+Args:
+{{#args}}   
+    {{var}} ({{typePlaceholder}}): {{descriptionPlaceholder}}
+{{/args}}
+{{/argsExist}}
+
+Return:
+    None
+{{#returns}}
+    {{typePlaceholder}} 
+    {{#returnsExist}}  : {{descriptionPlaceholder}} {{/returnsExist}}
+{{/returns}}
+
+Test:
+    * _test1_
+    * _test1_
