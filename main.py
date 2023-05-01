@@ -19,12 +19,21 @@ logger.add("logs/Build_City.log")
 # privat module
 from world.world import My_World
 
+STATUS = "start"
 
-
+def input(key):
+    match STATUS:
+        case "start":
+            pass
+        case "playing":
+            my_playfield.input(key)
+        
+    
 
 if __name__ == "__main__":
     app = Ursina()
     my_playfield = My_World("GameOne", "new")
+    STATUS = "playing"
 
     
     

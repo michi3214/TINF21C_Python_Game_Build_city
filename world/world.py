@@ -1,5 +1,5 @@
 """
-This is the class my_Wrold.
+This is the class My_Wrold.
     * generate a new world out of blocks (voxels)
     * save world to database 
     * load world fom database 
@@ -19,7 +19,10 @@ from loguru import logger
 
 # privat module
 from world.voxel.voxel import My_Voxel
+from world.voxel.voxel import My_Voxel_Grass
+from world.voxel.voxel import My_Voxel_Stone
 from world.player.player import My_Player
+from world.sky.sky import My_Sky
 
 
 class My_World():
@@ -46,6 +49,7 @@ class My_World():
     def __init__(self, world_name:str , type_of_creation:str="new") -> None:
         self.__STR_WORLD_NAME = world_name
         self.player = My_Player()
+        My_Sky()
         if type_of_creation == "new":
             self.__create_world()
         elif type_of_creation == "load":
@@ -75,7 +79,7 @@ class My_World():
         for x in range(10):
             for y in range(5):
                 for z in range(10):
-                    self.add_block(Vec3(x,(-1*y)-1,z), "grass")
+                    self.add_block(Vec3(x,(-1*y)-1,z), "stone")
                     
         # TODO: implement creation if new tbl in database 
     
@@ -98,10 +102,15 @@ class My_World():
             * position of new block is correct
         """
         
-        self.__df_world.loc[len(self.__df_world.index)] = [position.x,position.y,position.z,block_type]
         match block_type:
             case "grass":
-                My_Voxel(self, position)
+                My_Voxel_Grass(self, position)
+            case "stone":
+                My_Voxel_Stone(self, position)
+            case _:
+                logger.error("Programmer used wrong block type. World do not know this type: " + block_type)
+                return
+        self.__df_world.loc[len(self.__df_world.index)] = [position.x,position.y,position.z,block_type]
                 
         
     
@@ -159,7 +168,26 @@ class My_World():
         logger.info("Load world " + self.__STR_WORLD_NAME + " from database")
         pass
     
-    def print(self)->None:
-        print("Your world look like:")
-        print(self.__df_world)
+    def input(self, key)->None:
+        """input:
+            * managing user interaction while playing
+            * call functions of the different user interactions (open inventory, ...)
+        
+        Args:
+            * key (str): used key from the user 
+        
+        Return:
+            None
+        
+        Test:
+            * do the function get the rigth keys 
+            * did the case call the rigth function
+        """
+        match key:
+            case "left mouse down"|"right mouse down":
+                self.player.use_hand()
+            case "left mouse up"|"right mouse up":
+                self.player.passiv_hand()
+        
+        
     

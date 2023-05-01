@@ -12,17 +12,19 @@ One Voxel is one block in the world.
 """
 from loguru import logger
 from ursina import *
+from ursina import load_texture
+
 
 
 class My_Voxel(Button):
-    def __init__(self, world, position = (0,0,0)):
+    def __init__(self, world, position = (0,0,0), texture='assets/grass_block.png'):
         self.__world = world
         super().__init__(
             parent = scene,
             position = position,
             model = 'assets/block',
             origin_y = 0.5,
-            texture = load_texture('assets/grass_block.png'),
+            texture = texture,
             color = color.color(0,0,random.uniform(0.9,1)),
             scale = 0.5
         )
@@ -41,8 +43,8 @@ class My_Voxel(Button):
             None
         
         Test:
-            * _test1_
-            * _test1_
+            * is the block desroyed by left mouse click
+            * is a block added by right mouse click
         """
         
         if self.hovered:
@@ -51,4 +53,11 @@ class My_Voxel(Button):
                 self.__world.add_block(position=position, block_type="grass")
             if key == "left mouse down":
                 self.__world.destroy_block(position=position)
-               
+
+class My_Voxel_Grass(My_Voxel):
+    def __init__(self, world, position=(0, 0, 0)):
+        super().__init__(world, position, 'assets/grass_block.png')
+        
+class My_Voxel_Stone(My_Voxel):
+    def __init__(self, world, position=(0, 0, 0)):
+        super().__init__(world, position, 'assets/stone_block.png')
