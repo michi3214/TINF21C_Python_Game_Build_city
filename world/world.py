@@ -1,9 +1,11 @@
 """
-This is the class My_Wrold.
+This is the class My_Wrold. All functionalities of the gameplay itselfs are here. 
     * generate a new world out of blocks (voxels)
     * save world to database 
     * load world fom database 
     * add or destroy blocks (voxels) on the playfield
+    * add player to the scene
+    * add sky to the scene 
 
     Author: Michael Grote
     E-Mail: inf21111@lehre.dhbw-stuttgart.de
