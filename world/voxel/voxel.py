@@ -16,6 +16,14 @@ from ursina import load_texture
 
 
 class My_Voxel(Button):
+    """class My_Voxel:
+        * one voxel (block) in ursina
+        * set model of one block
+    
+    Test:
+        * Can be initialized
+        * Add block to ursina
+    """
     def __init__(self, world, position = (0,0,0), texture='assets/grass_block.png'):
         self.__world = world
         super().__init__(
@@ -54,9 +62,25 @@ class My_Voxel(Button):
                 self.__world.destroy_block(position=position)
 
 class My_Voxel_Grass(My_Voxel):
+    """My_Voxel_Grass:
+        * special voxel with grass
+        * change texture of voxel
+    
+    Test:
+        * voxel has the rigth texture
+        * voxel will be added at the rigth position
+    """
     def __init__(self, world, position=(0, 0, 0)):
         super().__init__(world, position, 'assets/grass_block.png')
         
 class My_Voxel_Stone(My_Voxel):
+    """My_Voxel_Stone:
+        * special voxel with texture stone
+        * change texture of voxel
+    
+    Test:
+        * voxel has the rigth texture
+        * voxel will be added at the rigth position
+    """
     def __init__(self, world, position=(0, 0, 0)):
         super().__init__(world, position, 'assets/stone_block.png')

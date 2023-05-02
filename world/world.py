@@ -72,6 +72,7 @@ class My_World():
             * is world generated
             * did the blocks appear around the player
             * is dataframe correctly filled
+            * is table in database generated
         """
         logger.info("Create a new world with the name" + self.__STR_WORLD_NAME)
         for z in range(10):
@@ -82,7 +83,7 @@ class My_World():
                 for z in range(10):
                     self.add_block(Vec3(x,(-1*y)-1,z), "stone")
                     
-        # TODO: implement creation if new tbl in database 
+        # TODO: implement creation new tbl in database 
     
      
     def add_block(self, position:Vec3,  block_type:str)->None:

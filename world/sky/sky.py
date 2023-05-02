@@ -13,6 +13,14 @@ This is the class My_Sky.
 from ursina import *
 
 class My_Sky(Entity):
+    """My_Sky:
+        * define the view from far away
+        * define an image for sky 
+    
+    Test:
+        * is displayed corectly
+        * has the rigth scale (big enough for the playfield)
+    """
     def __init__(self):
         super().__init__(
             parent=scene,

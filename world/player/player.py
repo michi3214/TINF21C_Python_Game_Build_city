@@ -15,6 +15,15 @@ from ursina import *
 
 
 class My_Player(Entity):
+    """My_Player:
+        * create first person controller
+        * add personal inventory
+        * add animation for hand
+    
+    Test:
+        * Can be initialized
+        * Arm is displayed correctly
+    """
     def __init__(self) -> None:
         super().__init__(
             parent = camera.ui,
@@ -25,9 +34,10 @@ class My_Player(Entity):
             position=Vec2(0.7,-0.6)
         )
         __my_player = FirstPersonController()
+        # TODO: Player can jump 2 blocks high, change to 1 
     
 
-    def use_hand(self):
+    def use_hand(self)->None:
         """use_hand:
             * change position of hand by using
         
@@ -36,11 +46,11 @@ class My_Player(Entity):
         
         Test:
             * did the position changed correctly 
-            * no more tests
+            * no more tests (only setter)
         """
         self.position   =Vec2(0.3,-0.5)
     
-    def passiv_hand(self):
+    def passiv_hand(self)->None:
         """passiv_hand:
             * move hand to normal position after use 
         
@@ -50,5 +60,6 @@ class My_Player(Entity):
         
         Test:
             * did the position changed correctly 
+            * no more tests (only setter)
         """
         self.position   =Vec2(0.7,-0.6)
