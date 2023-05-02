@@ -57,8 +57,10 @@ class My_Voxel(Button):
         if self.hovered:
             position= self.position + mouse.normal
             if key == "right mouse down":
+                Audio('assets\punch_sound', loop=False, autoplay=False).play()
                 self.__world.add_block(position=position, block_type="grass")
             if key == "left mouse down":
+                Audio('assets\punch_sound', loop=False, autoplay=False).play()
                 self.__world.destroy_block(position=position)
 
 class My_Voxel_Grass(My_Voxel):
