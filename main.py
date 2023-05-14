@@ -42,20 +42,22 @@ def input(key):
         case "playing":
             my_playfield.input(key)
         case _:
-            logger.error("Game is in an unplaned state (" + GAME_STATE + "). I think you underpaid the developer and he did not finished his work.")
+            logger.error("Game is in an unplanned state (" + GAME_STATE + "). I think you underpaid the developer and he did not finished his work.")
         
     
 
 if __name__ == "__main__":
+    window.title = "Build City"
+    window.borderless = False               # Show standard windows border of an application
+    
     app = Ursina()
     my_playfield = My_World("GameOne", "new")
     GAME_STATE = "playing"
 
     
     
-    window.borderless = False               # Show standard windows border of an application
-    window.exit_button.visible = False      # Do not show the in-game red X that closes the window
-    window.fps_counter.enabled = True       # Do not show the FPS (Frames per second) counter     
     
+    window.exit_button.visible = False      # Do not show the in-game red X that closes the window
+    window.fps_counter.enabled = True       # Do not show the FPS (Frames per second) counter    
     app.run()
     
