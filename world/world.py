@@ -49,15 +49,16 @@ class My_World():
     __df_world = pd.DataFrame(columns=["x","y","z","block_type"])
     
 
-    def __init__(self, world_name:str , type_of_creation:str="new") -> None:
+    def __init__(self, world_name:str , type_of_creation:bool) -> None:
         self.__STR_WORLD_NAME = world_name
+        if type_of_creation:
+            logger.info("Player create " + world_name)
+            self.__create_world()
+        elif type_of_creation:
+            logger.info("Player loaded " + world_name)
+            self.__load_world()
         self.player = My_Player()
         My_Sky()
-        if type_of_creation == "new":
-            self.__create_world()
-        elif type_of_creation == "load":
-            self.__load_world()
-        pass
     
     
     def __create_world(self)->None:

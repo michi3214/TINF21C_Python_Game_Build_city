@@ -18,6 +18,7 @@ logger.add("logs/Build_City.log")
 
 # privat module
 from world.world import My_World
+from menu.mainMenu import My_Main_Menu
 
 GAME_STATE = "menu"
 
@@ -43,6 +44,31 @@ def input(key):
             my_playfield.input(key)
         case _:
             logger.error("Game is in an unplanned state (" + GAME_STATE + "). I think you underpaid the developer and he did not finished his work.")
+
+
+
+
+def handle_menu_interaction(world_name:str,  new:bool=True)-> None:
+    """handle_menu_interaction:
+        * clear the screen  
+        * handles user input from the main menu
+        * create new world
+        * load existing world
+    
+    
+    Return:
+        None
+    
+    Test:
+        * can create a new world
+        * load an existing world
+    """
+    scene.clear()
+    GAME_STATE = "playing"
+    logger.info("Player loaded/created " + world_name)
+    # TODO: Not running can not load assests
+    my_playfield = My_World(world_name, new)
+        
         
     
 
@@ -51,8 +77,9 @@ if __name__ == "__main__":
     window.borderless = False               # Show standard windows border of an application
     
     app = Ursina()
-    my_playfield = My_World("GameOne", "new")
-    GAME_STATE = "playing"
+    menu =My_Main_Menu(handle_menu_interaction)
+    
+    
 
     
     
