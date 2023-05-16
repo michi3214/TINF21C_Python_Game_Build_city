@@ -28,7 +28,7 @@ from world.sky.sky import My_Sky
 
 
 
-class My_World():
+class My_World(Entity):
     """class my_World:
         * create world
         * add / destroy blocks (voxels) in the world
@@ -37,7 +37,7 @@ class My_World():
     
     Args:
         world_name (str): name of the world
-        type_of_creation (str): new world or load world (e.g. "new" or "load") 
+        type_of_creation (bool): true = new world or false = load world
     Return:
         None
     
@@ -48,16 +48,21 @@ class My_World():
 
     __df_world = pd.DataFrame(columns=["x","y","z","block_type"])
     
-
-    def __init__(self, world_name:str , type_of_creation:bool) -> None:
+    def __init__(self, world_name:str , type_of_creation:bool, **kwargs):
+        super().__init__(add_to_scene_entities=True, **kwargs)
+        
         self.__STR_WORLD_NAME = world_name
+        self.player = My_Player
+        
         if type_of_creation:
             logger.info("Player create " + world_name)
             self.__create_world()
+            
         elif type_of_creation:
             logger.info("Player loaded " + world_name)
             self.__load_world()
-        self.player = My_Player()
+            
+        
         My_Sky()
     
     
@@ -85,8 +90,8 @@ class My_World():
             for y in range(5):
                 for z in range(10):
                     self.add_block(Vec3(x,(-1*y)-1,z), "stone")
-                    
-        # TODO: implement creation new tbl in database 
+        
+        self.player = My_Player(parent=self) 
     
      
     def add_block(self, position:Vec3,  block_type:str)->None:
@@ -171,6 +176,7 @@ class My_World():
             * Add all blocks to ursina 
         """
         logger.info("Load world " + self.__STR_WORLD_NAME + " from database")
+        self.player = My_Player(parent=self)
         pass
     
     def input(self, key)->None:
@@ -190,9 +196,9 @@ class My_World():
         """
         match key:
             case "left mouse down"|"right mouse down":
-                self.player.use_hand()
+                self.player.my_arm.use_hand()
             case "left mouse up"|"right mouse up":
-                self.player.passiv_hand()
+                self.player.my_arm.passiv_hand()
         
         
     

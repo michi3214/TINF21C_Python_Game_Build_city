@@ -14,7 +14,7 @@ This is the class for My_New_World.
 from ursina import *
 from loguru import logger
 
-class My_New_World():
+class My_New_World_Menu(Entity):
     """My_New_World:
         * create menu to generate a new world
         * handle input of user 
@@ -27,12 +27,20 @@ class My_New_World():
         * validate input of user
         * Design is as expected (position of input field / button)
     """
-    def __init__(self, handel_function:Func) -> None:
+    TEXT_COLOR = color.black
+    
+    def __init__(self, handel_function:Func,  **kwargs):
+        super().__init__(add_to_scene_entities = False, **kwargs)
         logger.info("Create new world menu")
         self.handel_function = handel_function
-        Text(text="Please enter the world name (f the world already exists, it will be overwritten):",position=(-0.35,0.25))
-        self.name_of_world = InputField(active=True)
-        btn_submit = Button("Create new world", position=(0,-0.2,0), on_click=self.submit)
+        Text(text="Please enter the world name (f the world already exists, it will be overwritten):",
+             position=(-0.35,0.25),
+             parent=self,
+             color= self.TEXT_COLOR
+             
+             )
+        self.name_of_world_input = InputField(active=True, parent=self)
+        btn_submit = Button("Create new world", position=(0,-0.2), on_click=self.submit, parent=self)
         btn_submit.fit_to_text()
         
     def submit(self):
@@ -48,9 +56,9 @@ class My_New_World():
             * Is the error message shown to the user
             * Is the handel_function called, and a new world generated
         """
-        world_name = self.name_of_world.text
+        world_name = self.name_of_world_input.text
         if(world_name == ""):
-            Text(text="Please enter a valid name (no empty string):",color=color.red, position=(-0.25,-0.10))
+            Text(text="Please enter a valid name (no empty string):",color=color.red, position=(-0.25,-0.10), parent=self)
             pass
         else:
             # TODO create new world

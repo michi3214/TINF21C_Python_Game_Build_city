@@ -11,7 +11,7 @@ This is the class for My_Player.
 """
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina import *
-
+from loguru import logger
 
 
 class My_Player(Entity):
@@ -24,7 +24,19 @@ class My_Player(Entity):
         * Can be initialized
         * Arm is displayed correctly
     """
-    def __init__(self) -> None:
+    def __init__(self,parent=scene, add_to_scene_entities=True, **kwargs):
+        super().__init__(add_to_scene_entities, **kwargs)
+        logger.info("Player is initialized")
+        self.my_arm = My_Arm(parent=self)
+        self.my_player = FirstPersonController(position=Vec3(5,2,5))
+        logger.debug("Player ready for playing need FirstPersonController")
+        # TODO: Player can jump 2 blocks high, change to 1 
+    
+
+    
+        
+class My_Arm(Entity):
+    def __init__(self,parent, add_to_scene_entities=True, **kwargs):        
         super().__init__(
             parent = camera.ui,
             model = "assets/arm",
@@ -33,10 +45,7 @@ class My_Player(Entity):
             rotation = Vec3(150,-10,0),
             position=Vec2(0.7,-0.6)
         )
-        __my_player = FirstPersonController()
-        # TODO: Player can jump 2 blocks high, change to 1 
     
-
     def use_hand(self)->None:
         """use_hand:
             * change position of hand by using

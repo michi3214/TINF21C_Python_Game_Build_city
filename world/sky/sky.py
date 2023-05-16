@@ -11,6 +11,8 @@ This is the class My_Sky.
 """
 
 from ursina import *
+from loguru import logger
+
 
 class My_Sky(Entity):
     """My_Sky:
@@ -22,7 +24,9 @@ class My_Sky(Entity):
         * has the rigth scale (big enough for the playfield)
     """
     def __init__(self):
+        logger.debug("Sky was initialized")
         super().__init__(
+            add_to_scene_entities = False,
             parent=scene,
             model="sphere",
             texture="assets/skybox.png",

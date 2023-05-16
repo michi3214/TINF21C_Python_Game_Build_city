@@ -2,7 +2,8 @@
 This is the main script.
     * create the ursina app
     * handle user interactions 
-    * manage user steps (e.g. playing, in the menu, pause, ...)
+    * manage game states (e.g. playing, in the menu, pause, ...)
+    * close or open the menus
 
     Author: Michael Grote
     E-Mail: inf21111@lehre.dhbw-stuttgart.de
@@ -21,11 +22,13 @@ from world.world import My_World
 from menu.mainMenu import My_Main_Menu
 
 GAME_STATE = "menu"
+my_playfield = My_World
 
-def input(key):
+def input(key:str)->None:
     """input:
-        * handels user interation
-        * choose the rigth input function depending on the GAME_STATE 
+        * process user interaction
+        * choose the right input function depending on the GAME_STATE 
+        * process game menu start 
     
     Args:
         * key (str): used key (e.g. Keystrokes )
@@ -34,8 +37,8 @@ def input(key):
         None
     
     Test:
-        * # TODO: test 1
-        * # TODO: test 2
+        * call the right function at the game_state
+        * all keys for opening the menu are correctly implemented
     """
     match GAME_STATE:
         case "menu":
@@ -66,7 +69,6 @@ def handle_menu_interaction(world_name:str,  new:bool=True)-> None:
     scene.clear()
     GAME_STATE = "playing"
     logger.info("Player loaded/created " + world_name)
-    # TODO: Not running can not load assests
     my_playfield = My_World(world_name, new)
         
         
@@ -78,8 +80,8 @@ if __name__ == "__main__":
     
     app = Ursina()
     menu =My_Main_Menu(handle_menu_interaction)
-    
-    
+    # my_playfield = My_World("world_name", True)
+    # handle_menu_interaction("world_name", True)
 
     
     
