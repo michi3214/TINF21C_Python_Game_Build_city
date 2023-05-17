@@ -1,7 +1,7 @@
 """
 This is the main script. 
     * create game engine (Ursina)
-    * process change between menu and game 
+    * process change between main menu and gaming
     
 
     Author: Michael Grote
@@ -33,6 +33,7 @@ def handle_world_selection(world_name:str, new:bool)->None:
     """handle_world_selection:
         * create new world/game instance
         * handle function for new world menu
+        * call function of My_World to load / create a world
     
     Args:
         * world_name (str): name of the world

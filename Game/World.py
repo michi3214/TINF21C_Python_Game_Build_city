@@ -45,7 +45,6 @@ class My_World(Entity):
         self.player_position = Vec3(5,2,5)
         FILE_NAME = self.__STR_WORLD_NAME.replace(" ", "_")
         self.__SAVE_PATH = os.path.join(os.getcwd(),"saved_worlds", FILE_NAME)
-        logger.debug("save path= " + self.__SAVE_PATH)
         
         My_Sky(parent=self)
         if new:
