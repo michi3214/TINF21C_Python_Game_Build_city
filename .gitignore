@@ -1,3 +1,6 @@
+# ignore ursina temp files
+/models_compressed
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

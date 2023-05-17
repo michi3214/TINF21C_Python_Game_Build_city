@@ -15,19 +15,21 @@ from loguru import logger
 
 
 class My_Sky(Entity):
-    """My_Sky:
+    """class My_Sky:
         * define the view from far away
-        * define an image for sky 
+        * define an image for the sky 
     
     Test:
-        * is displayed corectly
-        * has the rigth scale (big enough for the playfield)
+        * is displayed correctly
+        * has the right scale (big enough for the game field)
+    
+    TODO for future:
+        * sky has an end, player can move out of the sky 
     """
-    def __init__(self):
+    def __init__(self, parent):
         logger.debug("Sky was initialized")
         super().__init__(
-            add_to_scene_entities = False,
-            parent=scene,
+            parent=parent,
             model="sphere",
             texture="assets/skybox.png",
             scale = 150,

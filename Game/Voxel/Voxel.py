@@ -22,12 +22,12 @@ class My_Voxel(Button):
     
     Test:
         * Can be initialized
-        * Add block to ursina
+        * Block is displayed correctly at the right position
     """
     def __init__(self, world, position = (0,0,0), texture='assets/grass_block.png'):
         self.__world = world
         super().__init__(
-            parent = scene,
+            parent = self.__world,
             position = position,
             model = 'assets/block',
             origin_y = 0.5,
@@ -35,6 +35,8 @@ class My_Voxel(Button):
             color = color.color(0,0,random.uniform(0.9,1)),
             scale = 0.5
         )
+    
+    
     
     
     def input(self, key:str):
@@ -63,6 +65,9 @@ class My_Voxel(Button):
                 Audio('assets\punch_sound', loop=False, autoplay=False).play()
                 self.__world.destroy_block(position=position)
 
+
+
+
 class My_Voxel_Grass(My_Voxel):
     """My_Voxel_Grass:
         * special voxel with grass
@@ -74,6 +79,9 @@ class My_Voxel_Grass(My_Voxel):
     """
     def __init__(self, world, position=(0, 0, 0)):
         super().__init__(world, position, 'assets/grass_block.png')
+     
+     
+     
         
 class My_Voxel_Stone(My_Voxel):
     """My_Voxel_Stone:
@@ -81,8 +89,8 @@ class My_Voxel_Stone(My_Voxel):
         * change texture of voxel
     
     Test:
-        * voxel has the rigth texture
-        * voxel will be added at the rigth position
+        * voxel has the right texture
+        * voxel will be added at the right position
     """
     def __init__(self, world, position=(0, 0, 0)):
         super().__init__(world, position, 'assets/stone_block.png')
