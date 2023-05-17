@@ -13,6 +13,7 @@ This is the main script.
 """
 
 # python module
+import os
 from ursina import *
 from loguru import logger
 logger.add("logs/Build_City.log")
@@ -20,14 +21,20 @@ logger.add("logs/Build_City.log")
 # privat module
 from world.world import My_World
 from menu.mainMenu import My_Main_Menu
+from menu.pauseMenu import My_Pause_Menu
 
-GAME_STATE = "menu"
+
 my_playfield = My_World
-
+actual_game_state = "menu"
+def stop_pause():
+    logger.debug("End pause")
+    application.resume()
+    
+    
 def input(key:str)->None:
     """input:
         * process user interaction
-        * choose the right input function depending on the GAME_STATE 
+        * choose the right input function depending on the actual_game_state 
         * process game menu start 
     
     Args:
@@ -40,13 +47,36 @@ def input(key:str)->None:
         * call the right function at the game_state
         * all keys for opening the menu are correctly implemented
     """
-    match GAME_STATE:
+    global actual_game_state
+    match actual_game_state:
         case "menu":
+            # here can shortcuts for the main menu implemented
             pass
+        
         case "playing":
-            my_playfield.input(key)
+            if key == "escape":
+                logger.debug("Open pause menu")
+                actual_game_state = "pause"
+                application.pause()
+                mouse.visible = True
+                mouse.locked = False
+                
+                pause_handler = My_Pause_Menu(stop_pause)
+                pause_handler.input = input
+                # TODO Implement pause menu
+            else:
+                pass
+                # my_playfield.input(key)
+                
+        case "pause":
+            logger.debug("Pause menu input")
+            if key == "escape":
+                stop_pause()
+            
+            
         case _:
-            logger.error("Game is in an unplanned state (" + GAME_STATE + "). I think you underpaid the developer and he did not finished his work.")
+            logger.error("Game is in an unplanned state (" + actual_game_state + "). I think you underpaid the developer and he did not finished his work.")
+
 
 
 
@@ -67,22 +97,29 @@ def handle_menu_interaction(world_name:str,  new:bool=True)-> None:
         * load an existing world
     """
     scene.clear()
-    GAME_STATE = "playing"
-    logger.info("Player loaded/created " + world_name)
+    global actual_game_state
+    global my_playfield
+    actual_game_state = "playing"
     my_playfield = My_World(world_name, new)
-        
-        
+    my_playfield.input = my_playfield.input_function
+
+def load_existing_worlds()->list:
+    path_to_worlds = os.path.join( os.getcwd(), "save_worlds")
+    worlds = os.listdir(path_to_worlds)
+    
+    result = []
+    for world in worlds:
+        result.append(world.replace("_"," ").replace(".csv", ""))
+    return result
     
 
 if __name__ == "__main__":
+    actual_game_state = "menu"
     window.title = "Build City"
     window.borderless = False               # Show standard windows border of an application
-    
     app = Ursina()
-    menu =My_Main_Menu(handle_menu_interaction)
-    # my_playfield = My_World("world_name", True)
-    # handle_menu_interaction("world_name", True)
-
+    menu = My_Main_Menu(handle_menu_interaction)
+    # load_existing_worlds()
     
     
     
