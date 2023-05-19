@@ -7,7 +7,7 @@ In this script is the pause menu implemented.
 
     Author: Michael Grote
     E-Mail: inf21111@lehre.dhbw-stuttgart.de
-    Date: 01.05.2023
+    Date: 19.05.2023
     Version 1.0.0
     license: MIT
 """
