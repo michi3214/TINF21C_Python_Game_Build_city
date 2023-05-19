@@ -24,6 +24,7 @@ from Game.Voxel.Voxel import My_Voxel_Grass
 from Game.Voxel.Voxel import My_Voxel_Stone
 from Game.Player.Player import My_Player
 from Game.Sky.Sky import My_Sky
+from Game.PauseMenu.PauseMenu import My_Pause_Menu
 
 
 class My_World(Entity):
@@ -233,10 +234,11 @@ class My_World(Entity):
                     mouse.visible = False
                     mouse.locked = True
                     application.resume()
-                    # TODO: delete pause menu 
+                    # TODOD: hide the arm of the player (is not pause because it is parent = camera.ui)
+                    destroy(self.pauseMenu)
                 else:
                     logger.info("Pause menu opened")
                     application.pause()
                     mouse.visible = True
                     mouse.locked = False
-                    # TODO: open pause menu with button to save game 
+                    self.pauseMenu = My_Pause_Menu(self)
