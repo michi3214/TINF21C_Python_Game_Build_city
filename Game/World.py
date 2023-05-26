@@ -45,7 +45,7 @@ class My_World(Entity):
         self.__STR_WORLD_NAME = world_name
         self.player_position = Vec3(5,2,5)
         FILE_NAME = self.__STR_WORLD_NAME.replace(" ", "_")
-        self.__SAVE_PATH = os.path.join(os.getcwd(),"saved_worlds", FILE_NAME)
+        self.__SAVE_PATH = os.path.join(os.getcwd(),"saved_worlds", FILE_NAME + ".csv")
         
         My_Sky(parent=self)
         if new:
@@ -104,6 +104,8 @@ class My_World(Entity):
         try:
             self.__df_world = pd.read_csv(self.__SAVE_PATH)
             # TODO: load voxels into ursina
+            for index, row in self.__df_world.iterrows():
+                self.add_block(Vec3(row["x"], row["y"], row["z"]), row["block_type"])
         except Exception as err:
             logger.error("Could not load the world:")
             logger.error(str(err))
@@ -126,7 +128,7 @@ class My_World(Entity):
         """
         logger.info("World " + self.__STR_WORLD_NAME + " will be saved at " + self.__SAVE_PATH)
         try:
-            self.__df_world.to_csv(self.__SAVE_PATH)
+            self.__df_world.to_csv(self.__SAVE_PATH, index=False)
         except Exception as err:
             logger.error("Could not save the world:")
             logger.error(str(err))

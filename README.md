@@ -19,3 +19,11 @@ The art work is from Kenney.nl. You can look it up [here](https://opengameart.or
 ## Use venv
 1. `.\name\Scripts\Activate.ps1` 
 2. `pip install -r req.txt`
+
+# How to Play
+
+key | function 
+-------- | -------- 
+w a s d   | move player
+esc | open menu
+  

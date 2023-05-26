@@ -47,6 +47,7 @@ def handle_world_selection(world_name:str, new:bool)->None:
         * create a new world
     """
     logger.info("Player selected: " + world_name)
+    destroy(start_menu)
     my_world = World(world_name, new)
     
     
