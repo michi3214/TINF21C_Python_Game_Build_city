@@ -1,9 +1,9 @@
 """
 This is the class My_World. All functionalities of the game play itself are here. 
-    * generate a new world out of blocks (voxels)
+    * generate a new world out of voxels
     * save world to csv-file 
     * load world fom csv-file 
-    * add or destroy blocks (voxels) on the play field
+    * add or destroy voxels on the play field
     * add player to this world
     * add sky to this world
 
@@ -31,7 +31,7 @@ class My_World(Entity):
     """class My_World:
         * define the game play 
         * process input while playing
-        * add new or destroy blocks/voxels
+        * add new or destroy voxels
         * save / load world
     
     Test:
@@ -57,6 +57,8 @@ class My_World(Entity):
             self.__load_world()
 
         self.player = My_Player(position=self.player_position)
+        self.pauseMenu = My_Pause_Menu(self)
+        self.pauseMenu.visible = False
     
     
     
@@ -75,13 +77,17 @@ class My_World(Entity):
             * is dataframe correctly filled
             * is table in database generated
         """
-        for z in range(10):
-            for x in range(10):
-                    self.add_block( Vec3(x,0,z), "grass")
-        for x in range(10):
-            for y in range(5):
-                for z in range(10):
-                    self.add_block(Vec3(x,(-1*y)-1,z), "stone")
+        self.add_block( Vec3(0,0,0), "grass")
+        self.add_block( Vec3(0,-1,0), "grass")
+        self.add_block( Vec3(5,0,5), "grass")
+        self.add_block( Vec3(5,-1,5), "grass")
+        # for z in range(10):
+        #     for x in range(10):
+        #             self.add_block( Vec3(x,0,z), "grass")
+        # for x in range(10):
+        #     for y in range(5):
+        #         for z in range(10):
+        #             self.add_block(Vec3(x,(-1*y)-1,z), "stone")
 
 
 
@@ -103,12 +109,13 @@ class My_World(Entity):
         logger.info("World " + self.__STR_WORLD_NAME + " will be loaded from " + self.__SAVE_PATH)
         try:
             self.__df_world = pd.read_csv(self.__SAVE_PATH)
-            # TODO: load voxels into ursina
             for index, row in self.__df_world.iterrows():
+                logger.debug("Load x,y,z: " + str(row["x"]) +  str(row["y"]) + str(row["z"]))
                 self.add_block(Vec3(row["x"], row["y"], row["z"]), row["block_type"])
         except Exception as err:
             logger.error("Could not load the world:")
             logger.error(str(err))
+        logger.debug("World loaded")
     
     
     
@@ -138,7 +145,7 @@ class My_World(Entity):
     def add_block(self, position:Vec3,  block_type:str)->None:
         """add_block:
             * add voxel to scene in Ursina
-            * add voxel to DataFrame
+            * add voxel (position and type) to DataFrame
         
         Args:
             block_type (str): type of the block_type 
@@ -162,17 +169,15 @@ class My_World(Entity):
                 logger.error("Programmer used wrong block type. World do not know this type: " + block_type)
                 return
         self.__df_world.loc[len(self.__df_world.index)] = [position.x,position.y,position.z,block_type]
+        logger.debug("add block: " + str(position.x) + " " + str(position.y) + " " + str(position.z))
                 
         
     
     
-    def destroy_block(self,position:Vec3)->None:
+    def destroy_block(self)->None:
         """destroy_block:
-            * destroy one block
+            * destroy hovered block
             * delete block from DataFrame
-        
-        Args:
-            * position (Vec3): (x,y,z,) - Position
         
         Return:
             None
@@ -184,9 +189,9 @@ class My_World(Entity):
         TODO for future:
             * delete block by position not by mouse 
         """
-        self.__df_world.drop(self.__df_world[(self.__df_world["x"] ==   position.x) & (self.__df_world["y"] ==   position.y) &  (self.__df_world["z"] ==   position.z)].index, inplace=True)
+        position = mouse.hovered_entity.position
         destroy(mouse.hovered_entity)
-             
+        self.__df_world.drop(self.__df_world[(self.__df_world["x"] ==   position.x) & (self.__df_world["y"] ==   position.y) &  (self.__df_world["z"] ==   position.z)].index, inplace=True)
      
        
        
@@ -237,10 +242,10 @@ class My_World(Entity):
                     mouse.locked = True
                     application.resume()
                     # TODOD: hide the arm of the player (is not pause because it is parent = camera.ui)
-                    destroy(self.pauseMenu)
+                    self.pauseMenu.visible = False
                 else:
                     logger.info("Pause menu opened")
                     application.pause()
                     mouse.visible = True
                     mouse.locked = False
-                    self.pauseMenu = My_Pause_Menu(self)
+                    self.pauseMenu.visible = True

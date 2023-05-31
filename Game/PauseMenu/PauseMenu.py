@@ -30,5 +30,5 @@ class My_Pause_Menu(Entity):
     def __init__(self, world):
         self.__world = world
         super().__init__(ignore_paused=True, parent = camera.ui)
-        save_button = Button("Save world", position=Vec2(0,-0.2), on_click=self.__world.save_world(), parent=self)
+        save_button = Button("Save world", position=Vec2(0,-0.2), on_click=self.__world.save_world, parent=self)
         save_button.fit_to_text()
