@@ -1,8 +1,8 @@
 """
 This is the class for My_Voxel and also the specific Voxels.
 One Voxel is one block in the world. 
-    * create one Voxel
-    * handle the design of the Voxel
+    * create one voxel
+    * handle the design of the voxel
 
     Author: Michael Grote
     E-Mail: inf21111@lehre.dhbw-stuttgart.de
@@ -10,9 +10,7 @@ One Voxel is one block in the world.
     Version 1.0.0
     license: MIT
 """
-from loguru import logger
 from ursina import *
-from ursina import load_texture
 
 
 class My_Voxel(Button):
@@ -73,8 +71,8 @@ class My_Voxel_Grass(My_Voxel):
         * change texture of voxel
     
     Test:
-        * voxel has the rigth texture
-        * voxel will be added at the rigth position
+        * voxel has the correct texture
+        * voxel will be added at the right position
     """
     def __init__(self, world, position=(0, 0, 0)):
         super().__init__(world, position, 'assets/grass_block.png')

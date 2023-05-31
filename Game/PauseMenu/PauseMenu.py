@@ -1,8 +1,7 @@
 """
 In this script is the pause menu implemented. 
     * create pause menu
-    * stop and start world (pause, resume) 
-    * create buttons for save and close 
+    * create buttons for save world
     
 
     Author: Michael Grote

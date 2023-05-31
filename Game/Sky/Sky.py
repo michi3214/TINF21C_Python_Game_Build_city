@@ -1,6 +1,6 @@
 """
 This is the class My_Sky.
-    * generate a sphere around the playfield
+    * generate a sphere around the play field
     * create a sky for the player
 
     Author: Michael Grote

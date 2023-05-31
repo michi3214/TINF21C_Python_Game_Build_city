@@ -51,6 +51,7 @@ class My_New_World_Menu(Entity):
     
     
     
+    
     def submit(self)->None:
         """submit:
             * user action: want to create new world
@@ -66,9 +67,11 @@ class My_New_World_Menu(Entity):
             * show warning by wrong input (validate input)
             * destroy the new world menu
             * call function of main.py / create new world
+            
+        TODO for the future:
+            * no underlines in the name are allowed, add validation 
         """
         world_name = self.name_of_world_input.text
-        # TODO: no underlines in the name are allowed, add validation 
         if(world_name == ""):
             Text(text="Please enter a valid name (no empty string):",color=color.red, position=(-0.25,-0.10), parent=self)
         else:

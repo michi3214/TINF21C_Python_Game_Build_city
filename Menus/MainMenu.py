@@ -86,7 +86,7 @@ class My_Main_Menu(Entity):
         
         
         Return:
-            list list of existing world names
+            list of existing world names
             
         
         Test:

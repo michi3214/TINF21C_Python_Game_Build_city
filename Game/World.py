@@ -32,7 +32,7 @@ class My_World(Entity):
         * define the game play 
         * process input while playing
         * add new or destroy voxels
-        * save / load world
+        * save / load world to / from csv-file
     
     Test:
         * world can be created
@@ -77,17 +77,13 @@ class My_World(Entity):
             * is dataframe correctly filled
             * is table in database generated
         """
-        self.add_block( Vec3(0,0,0), "grass")
-        self.add_block( Vec3(0,-1,0), "grass")
-        self.add_block( Vec3(5,0,5), "grass")
-        self.add_block( Vec3(5,-1,5), "grass")
-        # for z in range(10):
-        #     for x in range(10):
-        #             self.add_block( Vec3(x,0,z), "grass")
-        # for x in range(10):
-        #     for y in range(5):
-        #         for z in range(10):
-        #             self.add_block(Vec3(x,(-1*y)-1,z), "stone")
+        for z in range(10):
+            for x in range(10):
+                    self.add_block( Vec3(x,0,z), "grass")
+        for x in range(10):
+            for y in range(5):
+                for z in range(10):
+                    self.add_block(Vec3(x,(-1*y)-1,z), "stone")
 
 
 
@@ -110,12 +106,10 @@ class My_World(Entity):
         try:
             self.__df_world = pd.read_csv(self.__SAVE_PATH)
             for index, row in self.__df_world.iterrows():
-                logger.debug("Load x,y,z: " + str(row["x"]) +  str(row["y"]) + str(row["z"]))
                 self.add_block(Vec3(row["x"], row["y"], row["z"]), row["block_type"])
         except Exception as err:
             logger.error("Could not load the world:")
             logger.error(str(err))
-        logger.debug("World loaded")
     
     
     
@@ -169,7 +163,6 @@ class My_World(Entity):
                 logger.error("Programmer used wrong block type. World do not know this type: " + block_type)
                 return
         self.__df_world.loc[len(self.__df_world.index)] = [position.x,position.y,position.z,block_type]
-        logger.debug("add block: " + str(position.x) + " " + str(position.y) + " " + str(position.z))
                 
         
     
@@ -192,10 +185,10 @@ class My_World(Entity):
         position = mouse.hovered_entity.position
         destroy(mouse.hovered_entity)
         self.__df_world.drop(self.__df_world[(self.__df_world["x"] ==   position.x) & (self.__df_world["y"] ==   position.y) &  (self.__df_world["z"] ==   position.z)].index, inplace=True)
+    
      
        
-       
-     # TODO: check if it is needed or can be done by on_destroy (see player)       
+            
     def destroy(self):
         """destroy:
             * wrapper to destroy world from Ursina
@@ -215,10 +208,10 @@ class My_World(Entity):
     
     
     
-    def input(self, key:str):
+    def input(self, key:str)->None:
         """input:
             * managing user interaction while playing
-            * call functions of the different user interactions (open inventory, ...)
+            * call functions of the different user interactions (open pause menu, ...)
         
         Args:
             * key (str): used key from the user 
@@ -241,10 +234,11 @@ class My_World(Entity):
                     mouse.visible = False
                     mouse.locked = True
                     application.resume()
-                    # TODOD: hide the arm of the player (is not pause because it is parent = camera.ui)
+                    self.player.my_arm.visible = True
                     self.pauseMenu.visible = False
                 else:
                     logger.info("Pause menu opened")
+                    self.player.my_arm.visible = False
                     application.pause()
                     mouse.visible = True
                     mouse.locked = False

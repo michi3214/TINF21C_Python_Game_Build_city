@@ -15,6 +15,8 @@ from ursina import *
 from loguru import logger
 
 
+
+
 class My_Player(Entity):
     """class My_Player:
         * create first person controller
@@ -31,7 +33,9 @@ class My_Player(Entity):
         self.my_player = FirstPersonController(position=position, jump_height = 1)
         self.my_arm = My_Arm(parent=self.my_player)
      
-    # TODO: try to use on_destroy   
+     
+     
+     
     def destroy(self):
         """destroy:
             * wrapper for destroy
