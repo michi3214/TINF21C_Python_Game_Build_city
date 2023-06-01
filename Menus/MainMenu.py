@@ -93,6 +93,8 @@ class My_Main_Menu(Entity):
             * find all existing worlds (use the correct path)
             * format the name correctly 
         """
+        if not os.path.exists(self.PATH_TO_WORLDS):
+            os.makedirs(self.PATH_TO_WORLDS) 
         worlds = os.listdir(self.PATH_TO_WORLDS)
         
         result = []
