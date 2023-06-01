@@ -92,6 +92,7 @@ class My_Main_Menu(Entity):
         Test:
             * find all existing worlds (use the correct path)
             * format the name correctly 
+            * create folder to save new worlds, if not existing
         """
         if not os.path.exists(self.PATH_TO_WORLDS):
             os.makedirs(self.PATH_TO_WORLDS) 
