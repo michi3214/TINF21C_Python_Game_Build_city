@@ -49,11 +49,10 @@ class My_World(Entity):
         
         My_Sky(parent=self)
         if new:
-            logger.info("Player create " + world_name)
+            logger.info("Player create new world: " + world_name)
             self.__create_world()
-            
         else:
-            logger.info("Player loaded " + world_name)
+            logger.info("Player loaded existing world: " + world_name)
             self.__load_world()
 
         self.player = My_Player(position=self.player_position)
