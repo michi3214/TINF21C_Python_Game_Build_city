@@ -1,8 +1,8 @@
 """
-This is the main script.
-    * create the ursina app
-    * handle user interactions 
-    * manage user steps (e.g. playing, in the menu, pause, ...)
+This is the main script. 
+    * create game engine (Ursina)
+    * process change between main menu and gaming
+    
 
     Author: Michael Grote
     E-Mail: inf21111@lehre.dhbw-stuttgart.de
@@ -11,53 +11,57 @@ This is the main script.
     license: MIT
 """
 
+
+
 # python module
 from ursina import *
 from loguru import logger
 logger.add("logs/Build_City.log")
 
+
+
+
 # privat module
-from world.world import My_World
+from Menus.MainMenu import My_Main_Menu as MainMenu
+from Game.World import My_World as World
+  
 
-GAME_STATE = "menu"
 
-def input(key):
-    """input:
-        * handels user interation
-        * choose the rigth input function depending on the GAME_STATE 
+
+
+def handle_world_selection(world_name:str, new:bool)->None:
+    """handle_world_selection:
+        * create new world/game instance
+        * handle function for new world menu
+        * call function of My_World to load / create a world
     
     Args:
-        * key (str): used key (e.g. Keystrokes )
+        * world_name (str): name of the world
+        * new (bool): True=New world, False=Load World
     
     Return:
         None
     
     Test:
-        * # TODO: test 1
-        * # TODO: test 2
+        * can be called by new world menu
+        * create a new world
     """
-    match GAME_STATE:
-        case "menu":
-            pass
-        case "playing":
-            my_playfield.input(key)
-        case _:
-            logger.error("Game is in an unplanned state (" + GAME_STATE + "). I think you underpaid the developer and he did not finished his work.")
-        
+    logger.info("Player selected world: " + world_name)
+    destroy(start_menu)
+    my_world = World(world_name, new)
     
-
+    
+    
+    
 if __name__ == "__main__":
+    actual_game_state = "menu"
+    
     window.title = "Build City"
-    window.borderless = False               # Show standard windows border of an application
-    
+    window.borderless = False
     app = Ursina()
-    my_playfield = My_World("GameOne", "new")
-    GAME_STATE = "playing"
-
+    window.exit_button.visible = False
+    window.fps_counter.enabled = False
     
+    start_menu = MainMenu(handle_world_selection)
     
-    
-    window.exit_button.visible = False      # Do not show the in-game red X that closes the window
-    window.fps_counter.enabled = True       # Do not show the FPS (Frames per second) counter    
     app.run()
-    
