@@ -1,7 +1,7 @@
 """
 In this script is the pause menu implemented. 
     * create pause menu
-    * create buttons for save world
+    * create button to save world
     
 
     Author: Michael Grote
@@ -15,6 +15,9 @@ In this script is the pause menu implemented.
 # python module
 from ursina import *
 
+
+
+
 class My_Pause_Menu(Entity):
     """class My_Pause_Menu:
         * create pause menu
@@ -23,7 +26,7 @@ class My_Pause_Menu(Entity):
     Test:
         * create menu as expected
         * can save world in csv file 
-        * can stop the world and is be reactive 
+        * is reactive after pausing the world 
     """
     
     def __init__(self, world):

@@ -1,6 +1,6 @@
 """
 This is the class for My_Player.
-    * create one player
+    * define player
     * set camera view to FirstPersonController
     * add hand 
 
@@ -31,7 +31,7 @@ class My_Player(Entity):
         
         logger.info("Player is initialized")
         self.my_player = FirstPersonController(position=position, jump_height = 1)
-        self.my_arm = My_Arm(parent=self.my_player)
+        self.my_arm = My_Arm()
      
      
      
@@ -72,7 +72,7 @@ class My_Arm(Entity):
     
     
     
-    def __init__(self, parent):
+    def __init__(self):
         super().__init__(
             parent  = camera.ui,
             model   = "assets/arm",

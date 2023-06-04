@@ -19,8 +19,6 @@ from loguru import logger
 logger.add("logs/Build_City.log")
 
 
-
-
 # privat module
 from Menus.MainMenu import My_Main_Menu as MainMenu
 from Game.World import My_World as World

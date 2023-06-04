@@ -19,12 +19,15 @@ import pandas as pd
 from ursina import *
 from loguru import logger
 
+
 # privat module
 from Game.Voxel.Voxel import My_Voxel_Grass
 from Game.Voxel.Voxel import My_Voxel_Stone
 from Game.Player.Player import My_Player
 from Game.Sky.Sky import My_Sky
 from Game.PauseMenu.PauseMenu import My_Pause_Menu
+
+
 
 
 class My_World(Entity):
@@ -74,7 +77,6 @@ class My_World(Entity):
             * is world generated
             * did the blocks appear around the player
             * is dataframe correctly filled
-            * is table in database generated
         """
         for z in range(10):
             for x in range(10):
@@ -141,8 +143,8 @@ class My_World(Entity):
             * add voxel (position and type) to DataFrame
         
         Args:
-            block_type (str): type of the block_type 
-            position (Vec3): (x,y,z) - Positions
+            block_type (str): type of the block/voxel
+            position (Vec3): (x,y,z) - positions
         
         Return:
             None
@@ -177,9 +179,6 @@ class My_World(Entity):
         Test:
             * is block deleted from DataFrame
             * is blocked deleted from game-engine
-        
-        TODO for future:
-            * delete block by position not by mouse 
         """
         position = mouse.hovered_entity.position
         destroy(mouse.hovered_entity)
@@ -211,6 +210,7 @@ class My_World(Entity):
         """input:
             * managing user interaction while playing
             * call functions of the different user interactions (open pause menu, ...)
+            * open/close pause menu
         
         Args:
             * key (str): used key from the user 

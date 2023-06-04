@@ -16,8 +16,10 @@ from ursina import *
 import os
 from loguru import logger
 
+
 #privat module
 from Menus.NewWorldMenu import My_New_World_Menu
+
 
 
 
@@ -28,7 +30,6 @@ class My_Main_Menu(Entity):
         * let the user interact with buttons
     
         
-    
     Test:
         * can be initialized
         * rendered menu is as expected
@@ -70,7 +71,7 @@ class My_Main_Menu(Entity):
         
         Test:
             * is only executed if the user is in this menu
-            * no more tests (at the moment this function is not used)
+            * no more tests (at the moment this function is not used/implemented)
         """
         #TODO: in later versions here can be shortcuts be implemented
         pass
@@ -80,6 +81,7 @@ class My_Main_Menu(Entity):
     
     def load_world_names(self)->list:
         """load_world_names:
+            * create folder for PATH_TO_WORLDS, if not existing
             * get list of all files in the PATH_TO_WORLDS path
             * make a name out of the filename 
             * return world names

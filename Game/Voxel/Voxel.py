@@ -13,6 +13,8 @@ One Voxel is one block in the world.
 from ursina import *
 
 
+
+
 class My_Voxel(Button):
     """class My_Voxel:
         * one voxel (block) in ursina
@@ -50,7 +52,7 @@ class My_Voxel(Button):
             None
         
         Test:
-            * is the block desroyed by left mouse click
+            * is the block destroyed by left mouse click
             * is a block added by right mouse click
         """
         

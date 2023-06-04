@@ -1,8 +1,9 @@
 """
 This script contains the menu for creating a new world.
     * show menu
-    * show info text by wrong input
+    * world name input field
     * show button to submit input
+    * validate user input
 
     Author: Michael Grote
     E-Mail: inf21111@lehre.dhbw-stuttgart.de
@@ -27,7 +28,7 @@ class My_New_World_Menu(Entity):
     
     Test:
         * user input has been read correctly
-        * Buttons and Texts are represented as expected
+        * buttons and texts are represented as expected
     """
     TEXT_COLOR = color.black
     
@@ -56,7 +57,7 @@ class My_New_World_Menu(Entity):
         """submit:
             * user action: want to create new world
             * get user input for world name
-            * destroy the menu
+            * destroy the new world menu
             * call function from main.py to create new world
             * show warning by wrong input
         
