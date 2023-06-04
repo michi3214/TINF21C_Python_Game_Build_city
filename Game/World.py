@@ -35,7 +35,7 @@ class My_World(Entity):
         * define the game play 
         * process input while playing
         * add new or destroy voxels
-        * save / load world to / from csv-file
+        * save/load world to/from csv-file
     
     Test:
         * world can be created
@@ -76,7 +76,7 @@ class My_World(Entity):
         Test:
             * is world generated
             * did the blocks appear around the player
-            * is dataframe correctly filled
+            * is dataFrame correctly filled
         """
         for z in range(10):
             for x in range(10):
@@ -139,6 +139,7 @@ class My_World(Entity):
     
     def add_block(self, position:Vec3,  block_type:str)->None:
         """add_block:
+            * select block type
             * add voxel to scene in Ursina
             * add voxel (position and type) to DataFrame
         
